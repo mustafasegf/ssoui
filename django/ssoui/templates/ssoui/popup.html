@@ -13,7 +13,6 @@
     <script type="application/javascript">
       (() => {
         if (window.opener) {
-          console.log('ok')
           const rawData = '{{ LoginResponse | safe }}';
           const data = JSON.parse(rawData);
           window.opener.postMessage(data, "{{ OriginUrl | escape  }}");

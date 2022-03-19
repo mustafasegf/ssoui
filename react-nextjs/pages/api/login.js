@@ -14,7 +14,8 @@ export default async function handler(req, res) {
 
   const parser = new XMLParser();
   const dataMhs = parser.parse(data);
-  console.log(dataMhs);
+
+  const payload = {token: "", nama: dataMhs['cas:serviceResponse']['cas:authenticationSuccess']['cas:attributes']['cas:nama']}
 
   const wait = `
 <!DOCTYPE html>
@@ -24,28 +25,17 @@ export default async function handler(req, res) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Please Wait</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      body {
-        background-color: white;
-        color: #5d31ff;
-        font-family: -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-          "Helvetica Neue", sans-serif;
-        font-size: 16px;
-        text-align: center;
-      }
-    </style>
   </head>
   <body>
     <div id="wrap">
-      <h3>Ada yang salah</h3>
+      <h3>If you're seing this pagee, some is wrong happening</h3>
     </div>
     <script type="application/javascript">
       (() => {
         if (window.opener) {
-          window.opener.postMessage("done", "${originURL}");
-          console.log('sending data')
+          window.opener.postMessage(${ JSON.stringify(payload) }, "${originURL}");
         } else {
-          console.log("idk");
+          console.log("something bad happened");
         }
       })();
     </script>

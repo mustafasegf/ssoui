@@ -1,12 +1,17 @@
 import styles from "../styles/Home.module.css";
+import { useState } from 'react';
 
 export default function Home() {
-  const handlerLogin = async () => {
-    const data = await popup()
-    console.log(data)
+  const [nama, setNama] = useState(null);
+
+
+  const loginHandler = async () => {
+    const data = await popUpLogin()
+    setNama(data.nama)
+    localStorage.setItem("ssoui", JSON.stringify(data));
   };
 
-  const popup = () => {
+  const popUpLogin = () => {
     const SSOWindow = window.open(
       new URL(
         "https://sso.ui.ac.id/cas2/login?service=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Flogin%2F"
@@ -16,7 +21,6 @@ export default function Home() {
     );
 
     return new Promise(function (resolve, reject) {
-
       window.addEventListener(
         "message",
         (e) => {
@@ -32,7 +36,9 @@ export default function Home() {
   };
   return (
     <div className={styles.container}>
-      <button onClick={handlerLogin}>Clickme</button>
+      <h1>ini test</h1>
+      <button onClick={loginHandler}>Clickme</button>
+      { nama ?<p>Hi {nama}</p>: <></> } 
     </div>
   );
 }
