@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Please Wait</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id="wrap">
+      <h3>If you're seing this pagee, some is wrong happening</h3>
+    </div>
+    <script type="application/javascript">
+      (() => {
+        if (window.opener) {
+          console.log('ok')
+          const rawData = '{{ LoginResponse | safe }}';
+          const data = JSON.parse(rawData);
+          window.opener.postMessage(data, "{{ OriginUrl | escape  }}");
+        } else {
+        console.log('something bad happened')
+        }
+      })();
+    </script>
+  </body>
+</html>
